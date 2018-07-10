@@ -38,7 +38,8 @@ class ConfirmationsController < Milia::ConfirmationsController
       if resource.errors.empty?
         set_flash_message(:notice, :confirmed) if is_flashing_format?  
       if @confirmable.skip_confirm_change_password
-        sign_in_tenanted_and _redirect(resource)
+        sign_in_tenanted_and_redirect(resource)
+      end
       end
     else
       log_action( "password set form" )
