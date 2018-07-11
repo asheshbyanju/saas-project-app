@@ -59,8 +59,8 @@ class ProjectsController < ApplicationController
   end
 
   def users
-    @project_users = (@project.users + (User.where(tenant_id: @yenant.id, is_admin: true))) - [current_user]
-    @other_users = @tenant_users.where.(tenant_id: @yenant.id, is_admin: false) - (@project_users + [current_user])
+    @project_users = (@project.users + (User.where(tenant_id: @tenant.id, is_admin: true))) - [current_user]
+    @other_users = @tenant_users.where.(is_admin: false) - (@project_users + [current_user])
   end
 
   def add_users
@@ -71,6 +71,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to users_tenant_project_url(id: @project.id, tenant_id: @project.tenant.id), notice: "User was successfully added to project" }
       else
         format.html { redirect_to users_tenant_project_url(id: @project.id, tenant_id: @project.tenant.id), error: "User was not added to project" }
+      end
     end
   end
 
